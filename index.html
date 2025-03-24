@@ -7,6 +7,7 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 
     <!-- Favicon -->
     <link href="img/favicon.ico" rel="icon">
@@ -386,7 +387,7 @@
 
 
 
-        <!-- Contact Start -->
+ <!-- Contact Start -->
 <div class="container-xxl py-5" id="contact">
     <div class="container py-5 px-lg-5">
         <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
@@ -397,7 +398,7 @@
             <div class="col-lg-9">
                 <div class="wow fadeInUp" data-wow-delay="0.3s">
                     <p class="text-center mb-4">Have a question or need help? Reach out to us, and we'll respond as soon as possible. Fill out the form below to get started!</p>
-                    <form>
+                    <form id="contact-form" onsubmit="sendEmail(event)">
                         <div class="row g-4">
                             <div class="col-md-6">
                                 <div class="form-floating">
@@ -434,6 +435,34 @@
     </div>
 </div>
 <!-- Contact End -->
+
+
+<script>
+    (function() {
+        emailjs.init("hitsense2@gmail.com"); // Replace with your EmailJS User ID
+    })();
+
+    function sendEmail(event) {
+        event.preventDefault(); // Prevents the default form submission
+
+        // Collect form values
+        var params = {
+            name: document.getElementById("name").value,
+            email: document.getElementById("email").value,
+            subject: document.getElementById("subject").value,
+            message: document.getElementById("message").value
+        };
+
+        // Send email using EmailJS
+        emailjs.send("YOUR_SERVICE_ID", "YOUR_TEMPLATE_ID", params)
+            .then(function(response) {
+                alert("Message sent successfully!"); // Success alert
+                document.getElementById("contact-form").reset(); // Clear form
+            }, function(error) {
+                alert("Failed to send message. Please try again."); // Error alert
+            });
+    }
+</script>
 
 <!-- Footer Start -->
 <div class="container-fluid bg-primary text-light footer wow fadeIn" data-wow-delay="0.1s">
